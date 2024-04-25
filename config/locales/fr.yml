@@ -157,21 +157,21 @@ fr:
             provider_name: Provider name
             site: Site URL
           imt:
-            issuer: Issuer
             assertion_consumer_service_url: Assertion consumer service URL
-            sp_entity_id: SP entity ID
-            idp_sso_service_url: IDP SSO service URL (login)
-            idp_slo_service_url: IDP SLO service URL (logout)
-            idp_cert: IDP Certificate
-            name_identifier_format:  Name identifier format
             attribute_service_name: Attribute service name
-            uid_attribute: UID Attribute
+            idp_cert: IDP Certificate
+            idp_slo_service_url: IDP SLO service URL (logout)
+            idp_sso_service_url: IDP SSO service URL (login)
+            issuer: Issuer
+            name_identifier_format: Name identifier format
             protocol_binding: Protocol binding
             request_attribute_email: Request attribute for email
-            request_attribute_name: Request attribute for full name
             request_attribute_first_name: Request attribute for first name
             request_attribute_last_name: Request attribute for last name
+            request_attribute_name: Request attribute for full name
             request_attribute_nickname: Request attribute for nickname
+            sp_entity_id: SP entity ID
+            uid_attribute: UID Attribute
           publik:
             client_id: Client ID
             client_secret: Client secret

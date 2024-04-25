@@ -58,17 +58,19 @@ if Rails.application.secrets.dig(:omniauth, :imt).present?
 end
 
 ActiveSupport::Notifications.subscribe "decidim.user.omniauth_registration" do |_name, data|
-  user = Decidim::User.find(data[:user_id])
+  if %(imt).include?(data[:provider])
+    user = Decidim::User.find(data[:user_id])
 
-  # Array with only one element are converted to singleton
-  raw_info = data[:raw_data][:extra]["raw_info"].to_h.transform_values do |v|
-    if v.is_a?(Array) && v.size == 1
-      v.first
-    else
-      v
-    end
-  end.compact
+    # Array with only one element are converted to singleton
+    raw_info = data[:raw_data][:extra]["raw_info"].to_h.transform_values do |v|
+      if v.is_a?(Array) && v.size == 1
+        v.first
+      else
+        v
+      end
+    end.compact
 
-  user.extended_data.merge!({ data[:provider] => raw_info })
-  user.save!(validate: false, touch: false)
+    user.extended_data.merge!({ data[:provider] => raw_info })
+    user.save!(validate: false, touch: false)
+  end
 end
