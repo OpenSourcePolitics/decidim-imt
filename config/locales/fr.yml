@@ -160,6 +160,9 @@ fr:
             assertion_consumer_service_url: Assertion consumer service URL
             attribute_service_name: Attribute service name
             idp_cert: IDP Certificate
+            idp_metadata_url: IDP Metadata URL
+            idp_security_digest_method: IDP Security digest method
+            idp_security_signature_method: IDP Security signature method
             idp_slo_service_url: IDP SLO service URL (logout)
             idp_sso_service_url: IDP SSO service URL (login)
             issuer: Issuer
