@@ -12,7 +12,23 @@ if Rails.application.secrets.dig(:omniauth, :imt).present?
         organization = Decidim::Organization.find_by(host: request.host)
         provider_config = organization.enabled_omniauth_providers[:imt]
 
+        if provider_config[:idp_metadata_url].present?
+          idp_metadata_parser = OneLogin::RubySaml::IdpMetadataParser.new
+          idp_metadata = idp_metadata_parser.parse_remote_to_hash("")
+
+          Rails.logger.debug "++++++++++ idp_metadata  ++++++++++"
+          idp_metadata.each do |k,v|
+            Rails.logger.debug "------------------------------------"
+            Rails.logger.debug k
+            Rails.logger.debug v
+          end
+          Rails.logger.debug "+++++++++++++++++++++++++++++++++++"
+
+          env["omniauth.strategy"].options.merge!(idp_metadata)
+        end
+
         %w(
+          idp_metadata_url
           issuer
           assertion_consumer_service_url
           sp_entity_id
@@ -23,6 +39,8 @@ if Rails.application.secrets.dig(:omniauth, :imt).present?
           attribute_service_name
           uid_attribute
           protocol_binding
+          idp_security_digest_method
+          idp_security_signature_method
           request_attribute_email
           request_attribute_name
           request_attribute_first_name
@@ -52,6 +70,16 @@ if Rails.application.secrets.dig(:omniauth, :imt).present?
           last_name: ["last_name", "lastname", "lastName", env["omniauth.strategy"].options[:request_attribute_last_name]].uniq,
           nickname: ["username", "nickname", "handle", env["omniauth.strategy"].options[:request_attribute_nickname]].uniq
         }
+
+        # env["omniauth.strategy"].options[:certificate] = provider_config[:idp_cert] if provider_config[:idp_cert].present?
+
+        Rails.logger.debug "++++++++++ env[\"omniauth.strategy\"].options  ++++++++++"
+        env["omniauth.strategy"].options.each do |k,v|
+          Rails.logger.debug "------------------------------------"
+          Rails.logger.debug k
+          Rails.logger.debug v
+        end
+        Rails.logger.debug "+++++++++++++++++++++++++++++++++++++++++++++++++++++++++"
       }
     )
   end

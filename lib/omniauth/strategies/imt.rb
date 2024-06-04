@@ -8,7 +8,6 @@ module OmniAuth
       option :name, :imt
 
       option :sp_entity_id, "decidim-imt"
-      option :protocol_binding, "urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST"
 
       option :request_attribute_email, "email"
       option :request_attribute_name, "name"
@@ -27,7 +26,8 @@ module OmniAuth
         hash_attributes["uid"] = uid
 
         hash_attributes["name"] = "#{hash_attributes["first_name"]} #{hash_attributes["last_name"]}"
-        hash_attributes["name"] = uid.split("@").first if hash_attributes["name"].blank?
+        ## Don't fallback on uid to force the sign up form
+        # hash_attributes["name"] = uid.split("@").first if hash_attributes["name"].blank?
 
         hash_attributes
       end
