@@ -14,7 +14,7 @@ if Rails.application.secrets.dig(:omniauth, :imt).present?
 
         if provider_config[:idp_metadata_url].present?
           idp_metadata_parser = OneLogin::RubySaml::IdpMetadataParser.new
-          idp_metadata = idp_metadata_parser.parse_remote_to_hash("")
+          idp_metadata = idp_metadata_parser.parse_remote_to_hash(provider_config[:idp_metadata_url])
 
           Rails.logger.debug "++++++++++ idp_metadata  ++++++++++"
           idp_metadata.each do |k,v|
