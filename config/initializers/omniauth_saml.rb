@@ -14,7 +14,7 @@ if Rails.application.secrets.dig(:omniauth, :imt).present?
 
         idp_metadata_url = provider_config[:idp_metadata_url]
 
-        if env["omniauth.strategy"].on_setup_path? && request.params["action"] == "idp_entity_selector_url"
+        if env["omniauth.strategy"].on_setup_path? && request.params["setup_action"] == "idp_entity_selector_url"
           env["omniauth.strategy"].idp_entity_setup
           idp_metadata_url = env["omniauth.strategy"].options[:idp_metadata_url]
         end
@@ -88,12 +88,6 @@ if Rails.application.secrets.dig(:omniauth, :imt).present?
           Rails.logger.debug v
         end
         Rails.logger.debug "+++++++++++++++++++++++++++++++++++++++++++++++++++++++++"
-
-        if env["omniauth.strategy"].on_setup_path? && request.params["action"] == "idp_entity_selector_url"
-          Rails.logger.debug "(#{env["omniauth.strategy"].name}) Setup phase redirected to Request call"
-          env["omniauth.strategy"].skip_setup
-          return env["omniauth.strategy"].request_call
-        end
       }
     )
   end

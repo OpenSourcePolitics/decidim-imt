@@ -43,7 +43,6 @@ module OmniAuth
       end
 
       def redirect_to_entity_selector
-        @skip_request_phase = true
         Rails.logger.debug "Redirecting to entity selector URL : #{entity_selector_url}"
         redirect(entity_selector_url)
       end
@@ -64,7 +63,7 @@ module OmniAuth
       def entity_selector_callback_url
         uri = URI.parse(full_host + setup_path)
         uri.query = {
-          action: "idp_entity_selector_url",
+          setup_action: "idp_entity_selector_url",
           state: new_state
         }.to_query
         uri.to_s
@@ -97,7 +96,11 @@ module OmniAuth
         if options[:idp_entity_selector_url].present? && !@skip_idp_entity_setup
           redirect_to_entity_selector
         else
-          super
+          authn_request = OneLogin::RubySaml::Authrequest.new
+
+          with_settings do |settings|
+            return  authn_request.create(settings, additional_params_for_authn_request)
+          end
         end
       end
 
