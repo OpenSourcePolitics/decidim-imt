@@ -12,9 +12,16 @@ if Rails.application.secrets.dig(:omniauth, :imt).present?
         organization = Decidim::Organization.find_by(host: request.host)
         provider_config = organization.enabled_omniauth_providers[:imt]
 
-        if provider_config[:idp_metadata_url].present?
+        idp_metadata_url = provider_config[:idp_metadata_url]
+
+        if env["omniauth.strategy"].on_setup_path? && request.params["action"] == "idp_entity_selector_url"
+          env["omniauth.strategy"].idp_entity_setup
+          idp_metadata_url = env["omniauth.strategy"].options[:idp_metadata_url]
+        end
+
+        if idp_metadata_url.present?
           idp_metadata_parser = OneLogin::RubySaml::IdpMetadataParser.new
-          idp_metadata = idp_metadata_parser.parse_remote_to_hash(provider_config[:idp_metadata_url])
+          idp_metadata = idp_metadata_parser.parse_remote_to_hash(idp_metadata_url)
 
           Rails.logger.debug "++++++++++ idp_metadata  ++++++++++"
           idp_metadata.each do |k,v|
@@ -29,6 +36,7 @@ if Rails.application.secrets.dig(:omniauth, :imt).present?
 
         %w(
           idp_metadata_url
+          idp_entity_selector_url
           issuer
           assertion_consumer_service_url
           sp_entity_id
@@ -80,6 +88,12 @@ if Rails.application.secrets.dig(:omniauth, :imt).present?
           Rails.logger.debug v
         end
         Rails.logger.debug "+++++++++++++++++++++++++++++++++++++++++++++++++++++++++"
+
+        if env["omniauth.strategy"].on_setup_path? && request.params["action"] == "idp_entity_selector_url"
+          Rails.logger.debug "(#{env["omniauth.strategy"].name}) Setup phase redirected to Request call"
+          env["omniauth.strategy"].skip_setup
+          return env["omniauth.strategy"].request_call
+        end
       }
     )
   end
