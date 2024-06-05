@@ -104,6 +104,14 @@ module OmniAuth
         end
       end
 
+      def callback_call
+        Rails.logger.debug "(#{name}) custom callback_call"
+        Rails.logger.debug session.keys
+        Rails.logger.debug session["omniauth.idp_metadata_url"]
+        options[:idp_metadata_url] = session.delete("omniauth.idp_metadata_url")
+        super
+      end
+
 
 
       class CallbackError < StandardError
