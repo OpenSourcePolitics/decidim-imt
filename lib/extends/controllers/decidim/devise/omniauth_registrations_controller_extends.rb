@@ -12,6 +12,7 @@ module OmniauthRegistrationsControllerExtends
     Rails.logger.debug "Decidim::Devise::OmniauthRegistrationsController#setup"
     if request.env["omniauth.strategy"].on_setup_path? && request.params["setup_action"] == "idp_entity_selector_url"
       Rails.logger.debug "(#{request.env["omniauth.strategy"].name}) Setup phase redirected to Request call"
+      request.session["omniauth.idp_metadata_url"] = request.params["entityID"]
       request.env["omniauth.strategy"].skip_setup
       redirect_to request.env["omniauth.strategy"].request_call
     end

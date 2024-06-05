@@ -74,7 +74,7 @@ module OmniAuth
         raise CallbackError, error: :csrf_detected, reason: "Invalid \"state\" parameter" if invalid_state
 
         if request.params["entityID"].present? && request.params["entityID"].start_with?("http")
-          options["idp_metadata_url"] = request.params["entityID"]
+          options[:idp_metadata_url] = request.params["entityID"]
           @skip_idp_entity_setup = true
           Rails.logger.debug "(#{name}) IDP entity setup with new metadata URL #{options["idp_metadata_url"]}"
         end

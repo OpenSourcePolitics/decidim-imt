@@ -17,6 +17,11 @@ if Rails.application.secrets.dig(:omniauth, :imt).present?
         if env["omniauth.strategy"].on_setup_path? && request.params["setup_action"] == "idp_entity_selector_url"
           env["omniauth.strategy"].idp_entity_setup
           idp_metadata_url = env["omniauth.strategy"].options[:idp_metadata_url]
+        elsif env["omniauth.strategy"].on_callback_path?
+          Rails.logger.debug "(#{env["omniauth.strategy"].name}) setup phase on callback path"
+          Rails.logger.debug env["omniauth.strategy"].session.keys
+          Rails.logger.debug env["omniauth.strategy"].session["omniauth.idp_metadata_url"]
+          idp_metadata_url = env["omniauth.strategy"].session.delete("omniauth.idp_metadata_url")
         end
 
         if idp_metadata_url.present?
