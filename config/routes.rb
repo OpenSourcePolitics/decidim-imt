@@ -13,8 +13,4 @@ Rails.application.routes.draw do
   mount Decidim::Core::Engine => "/"
   # mount Decidim::Map::Engine => '/map'
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
-
-  devise_scope :user do
-    get "/users/auth/:provider/setup" => "decidim/devise/omniauth_registrations#setup"
-  end
 end

@@ -14,21 +14,12 @@ if Rails.application.secrets.dig(:omniauth, :imt).present?
 
         idp_metadata_url = provider_config[:idp_metadata_url]
 
-        if env["omniauth.strategy"].on_setup_path? && request.params["setup_action"] == "idp_entity_selector_url"
-          env["omniauth.strategy"].idp_entity_setup
-          idp_metadata_url = env["omniauth.strategy"].options[:idp_metadata_url]
-        elsif env["omniauth.strategy"].on_callback_path? && env["omniauth.strategy"].options[:idp_metadata_url].present?
-          Rails.logger.debug "(#{env["omniauth.strategy"].name}) setup phase on callback path"
-          Rails.logger.debug "found options[:idp_metadata_url] as #{env["omniauth.strategy"].options[:idp_metadata_url]}"
-          idp_metadata_url = env["omniauth.strategy"].options[:idp_metadata_url]
-        end
-
         if idp_metadata_url.present?
           idp_metadata_parser = OneLogin::RubySaml::IdpMetadataParser.new
           idp_metadata = idp_metadata_parser.parse_remote_to_hash(idp_metadata_url)
 
           Rails.logger.debug "++++++++++ idp_metadata  ++++++++++"
-          idp_metadata.each do |k,v|
+          idp_metadata.each do |k, v|
             Rails.logger.debug "------------------------------------"
             Rails.logger.debug k
             Rails.logger.debug v
@@ -40,7 +31,6 @@ if Rails.application.secrets.dig(:omniauth, :imt).present?
 
         %w(
           idp_metadata_url
-          idp_entity_selector_url
           issuer
           assertion_consumer_service_url
           sp_entity_id
@@ -86,7 +76,7 @@ if Rails.application.secrets.dig(:omniauth, :imt).present?
         # env["omniauth.strategy"].options[:certificate] = provider_config[:idp_cert] if provider_config[:idp_cert].present?
 
         Rails.logger.debug "++++++++++ env[\"omniauth.strategy\"].options  ++++++++++"
-        env["omniauth.strategy"].options.each do |k,v|
+        env["omniauth.strategy"].options.each do |k, v|
           Rails.logger.debug "------------------------------------"
           Rails.logger.debug k
           Rails.logger.debug v
@@ -101,16 +91,21 @@ ActiveSupport::Notifications.subscribe "decidim.user.omniauth_registration" do |
   if %(imt).include?(data[:provider])
     user = Decidim::User.find(data[:user_id])
 
-    # Array with only one element are converted to singleton
-    raw_info = data[:raw_data][:extra]["raw_info"].to_h.transform_values do |v|
-      if v.is_a?(Array) && v.size == 1
-        v.first
-      else
-        v
-      end
-    end.compact
+    Rails.logger.debug "decidim.user.omniauth_registration event in omniauth_saml"
+    Rails.logger.debug data
 
-    user.extended_data.merge!({ data[:provider] => raw_info })
-    user.save!(validate: false, touch: false)
+    if data.dig(:raw_data, :extra).present?
+      # Array with only one element are converted to singleton
+      raw_info = data[:raw_data][:extra]["raw_info"].to_h.transform_values do |v|
+        if v.is_a?(Array) && v.size == 1
+          v.first
+        else
+          v
+        end
+      end.compact
+
+      user.extended_data.merge!({ data[:provider] => raw_info })
+      user.save!(validate: false, touch: false)
+    end
   end
 end

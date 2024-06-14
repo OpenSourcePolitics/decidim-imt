@@ -158,7 +158,6 @@ en:
             assertion_consumer_service_url: Assertion consumer service URL
             attribute_service_name: Attribute service name
             idp_cert: IDP Certificate
-            idp_entity_selector_url : IDP entity selector URL
             idp_metadata_url: IDP Metadata URL
             idp_security_digest_method: IDP Security digest method
             idp_security_signature_method: IDP Security signature method
