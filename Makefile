@@ -39,3 +39,11 @@ logs:
 
 rebuild:
 	docker-compose -f docker-compose.local.yml up --build -d
+
+# Git utils
+
+prepare-commit: 
+	bundle exec erblint -la -a
+	bundle exec rubocop -A
+	bundle exec i18n-tasks normalize --locales en,fr
+	bundle exec  i18n-tasks unused --locales en,fr
