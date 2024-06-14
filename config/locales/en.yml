@@ -38,6 +38,8 @@ en:
       osp_authorization_workflow:
         name: Authorization procedure
     budgets:
+      order_reminder:
+        text_message: Your vote is still pending for the participatory budget. Please reconnect to %{organization_host} to confirm it
       projects:
         count:
           projects_count:
@@ -72,6 +74,14 @@ en:
           email_outro: Check the <a href="%{conflicts_path}">Verifications's conflicts list</a> and contact the participant to verify their details and solve the issue.
           email_subject: Failed verification attempt against a managed participant
           notification_title: The participant <a href="%{resource_path}">%{resource_title}</a> has tried to verify themself with the data of the managed participant <a href="%{managed_user_path}">%{managed_user_name}</a>.
+    forms:
+      user_answers_serializer:
+        email: Email
+        name: Name
+    half_signup:
+      quick_auth:
+        sms_verification:
+          text_message: Hello, %{verification} is the code to authenticate yourself on the platform
     initiatives:
       admin:
         initiatives:
@@ -108,11 +118,11 @@ en:
           text: What is FranceConnect ?
         forgot_password:
           ok_text: Warning, this password is the one of your local account and in no case the one of the account you use through FranceConnect. It will only be used when you log in with your email address rather than via FranceConnect.
+    participatory_processes:
+      show:
+        local_area: Organization area
     proposals:
       collaborative_drafts:
-        edit:
-          attachment_legend: "(Optional) Add an attachment"
-          select_a_category: Please select a category
         new:
           add_file: Add file
           edit_file: Edit file
@@ -222,3 +232,5 @@ en:
       time: 'You will be able to navigate on our website in :'
       time_unit: seconds
       title: Thank you for your participation on %{organization_name}
+  sms_verification_workflow:
+    message: 'Hello, here is the code to authenticate yourself on the %{platform} platform: %{code}'

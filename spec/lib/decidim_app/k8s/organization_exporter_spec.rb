@@ -32,10 +32,8 @@ describe DecidimApp::K8s::OrganizationExporter do
 
   describe ".export!" do
     it "calls the right methods" do
-      # rubocop:disable RSpec/AnyInstance
       expect_any_instance_of(described_class).to receive(:export!)
       described_class.export!(organization, logger, export_path, image)
-      # rubocop:enable RSpec/AnyInstance
     end
   end
 
@@ -176,7 +174,7 @@ describe DecidimApp::K8s::OrganizationExporter do
     it "returns the organization columns" do
       expect(subject.organization_columns).to eq({
                                                    "available_authorizations" => [],
-                                                   "available_locales" => %w(en fr),
+                                                   "available_locales" => %w(en fr ca es),
                                                    "default_locale" => "en",
                                                    "file_upload_settings" => {
                                                      "allowed_content_types" => {
