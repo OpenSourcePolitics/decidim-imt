@@ -13,7 +13,7 @@ Decidim.configure do |config|
     config.available_locales = ENV.fetch("AVAILABLE_LOCALES", "fr").split(",").map(&:to_sym)
   else
     config.default_locale = ENV.fetch("DEFAULT_LOCALE", "en").to_sym
-    config.available_locales = ENV.fetch("AVAILABLE_LOCALES", "en,fr").split(",").map(&:to_sym)
+    config.available_locales = ENV.fetch("AVAILABLE_LOCALES", "en,fr,ca,es").split(",").map(&:to_sym)
   end
 
   # Timeout session
@@ -91,7 +91,7 @@ Decidim.configure do |config|
   #   end
   # end
   #
-  # config.sms_gateway_service = 'Decidim::Verifications::Sms::ExampleGateway'
+  config.sms_gateway_service = Rails.application.secrets.dig(:decidim, :sms_gateway, :service)
 
   # Etherpad configuration
   #
@@ -115,6 +115,9 @@ Decidim.configure do |config|
   config.enable_machine_translations = Rails.application.secrets.translator[:enabled]
   config.machine_translation_service = "DeeplTranslator"
   config.machine_translation_delay = Rails.application.secrets.translator[:delay]
+
+  # newsletter unsubscribe link timeout
+  config.newsletters_unsubscribe_timeout = Rails.application.secrets.dig(:decidim, :newsletters_unsubscribe_timeout)
 end
 
 Rails.application.config.i18n.available_locales = Decidim.available_locales
