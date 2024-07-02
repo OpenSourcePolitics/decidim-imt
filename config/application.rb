@@ -44,6 +44,7 @@ module DevelopmentApp
     end
 
     config.after_initialize do
+      require "extends/controllers/decidim/devise_controllers_extends"
       require "extends/controllers/decidim/devise/sessions_controller_extends"
       require "extends/controllers/decidim/editor_images_controller_extends"
       require "extends/services/decidim/iframe_disabler_extends"
@@ -56,9 +57,22 @@ module DevelopmentApp
       require "extends/controllers/decidim/newsletters_controller_extends"
       require "extends/controllers/decidim/proposals/proposals_controller_extends"
 
+      require "extends/controllers/decidim/devise/omniauth_registrations_controller_extends"
+      require "extends/forms/decidim/omniauth_registration_form_extends"
+
       Decidim::GraphiQL::Rails.config.tap do |config|
         config.initial_query = "{\n  deployment {\n    version\n    branch\n    remote\n    upToDate\n    currentCommit\n    latestCommit\n    locallyModified\n  }\n}".html_safe
       end
+    end
+
+    initializer "session cookie domain", after: "Expire sessions" do
+      Rails.application.config.action_dispatch.cookies_same_site_protection = lambda { |request|
+        if request.fullpath.include?("/auth/imt")
+          :none
+        else
+          :lax
+        end
+      }
     end
 
     if ENV.fetch("RAILS_SESSION_STORE", "") == "active_record"

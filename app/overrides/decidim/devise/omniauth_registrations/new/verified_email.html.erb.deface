@@ -1,0 +1,2 @@
+<!-- insert_before 'div.actions' -->
+<%= f.hidden_field :verified_email %>

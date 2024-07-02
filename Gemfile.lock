@@ -780,6 +780,9 @@ GEM
     omniauth-rails_csrf_protection (1.0.2)
       actionpack (>= 4.2)
       omniauth (~> 2.0)
+    omniauth-saml (2.1.0)
+      omniauth (~> 2.0)
+      ruby-saml (~> 1.12)
     omniauth-twitter (1.4.0)
       omniauth-oauth (~> 1.1)
       rack
@@ -957,6 +960,9 @@ GEM
     rubocop-rspec (2.11.1)
       rubocop (~> 1.19)
     ruby-progressbar (1.13.0)
+    ruby-saml (1.14.0)
+      nokogiri (>= 1.10.5)
+      rexml
     ruby-vips (2.2.1)
       ffi (~> 1.12)
     rubyXL (3.4.27)
@@ -1155,6 +1161,7 @@ DEPENDENCIES
   omniauth-france_connect!
   omniauth-publik!
   omniauth-rails_csrf_protection (~> 1.0)
+  omniauth-saml
   parallel_tests
   puma (>= 5.5.1)
   rack-attack (~> 6.6)

@@ -24,13 +24,6 @@ module SessionControllerExtends
         super
       end
     end
-
-    private
-
-    # Skip authorization handler by default
-    def skip_first_login_authorization?
-      ActiveRecord::Type::Boolean.new.cast(ENV.fetch("SKIP_FIRST_LOGIN_AUTHORIZATION", "false"))
-    end
   end
 
   def destroy_france_connect_session(fc_logout_path)

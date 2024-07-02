@@ -37,6 +37,7 @@ gem "decidim-term_customizer", git: "https://github.com/OpenSourcePolitics/decid
 # Omniauth gems
 gem "omniauth-france_connect", git: "https://github.com/OpenSourcePolitics/omniauth-france_connect"
 gem "omniauth-publik", git: "https://github.com/OpenSourcePolitics/omniauth-publik"
+gem "omniauth-saml"
 
 # Default
 gem "activejob-uniqueness", require: "active_job/uniqueness/sidekiq_patch"
