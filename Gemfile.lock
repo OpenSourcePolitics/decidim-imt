@@ -41,15 +41,6 @@ GIT
       decidim-core (>= 0.26.0, < 0.28.0)
 
 GIT
-  remote: https://github.com/OpenSourcePolitics/decidim-module-half_sign_up.git
-  revision: 661bfe02e51d1cd4f16df1eb483d932494d5df1f
-  branch: feature/half_signup_and_budgets_booth
-  specs:
-    decidim-half_signup (0.27.0)
-      countries (~> 5.1, >= 5.1.2)
-      decidim-core (~> 0.27.0)
-
-GIT
   remote: https://github.com/OpenSourcePolitics/decidim-module-homepage_interactive_map.git
   revision: dd685166fdf953a11bd6a9e0dac56feca3bd0708
   branch: release/0.27-stable
@@ -60,14 +51,6 @@ GIT
       decidim-dev (>= 0.25.0, < 0.28)
       rgeo (~> 2.4)
       rgeo-proj4 (~> 3.1)
-
-GIT
-  remote: https://github.com/OpenSourcePolitics/decidim-module-ptp.git
-  revision: 32b0f9a29499768cf6783a0026badaed33f025ab
-  specs:
-    decidim-budgets_booth (0.27.0)
-      decidim-budgets (~> 0.27.0)
-      decidim-core (~> 0.27.0)
 
 GIT
   remote: https://github.com/OpenSourcePolitics/decidim-module-survey_multiple_answers
@@ -1140,7 +1123,6 @@ DEPENDENCIES
   dalli
   decidim (~> 0.27.0)
   decidim-budget_category_voting!
-  decidim-budgets_booth!
   decidim-cache_cleaner
   decidim-category_enhanced (~> 0.0.1)
   decidim-conferences (~> 0.27.0)
@@ -1150,7 +1132,6 @@ DEPENDENCIES
   decidim-extra_user_fields!
   decidim-friendly_signup!
   decidim-gallery!
-  decidim-half_signup!
   decidim-homepage_interactive_map!
   decidim-initiatives (~> 0.27.0)
   decidim-ludens!
