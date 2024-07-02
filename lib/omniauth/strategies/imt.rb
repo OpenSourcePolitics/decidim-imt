@@ -6,6 +6,10 @@ module OmniAuth
   module Strategies
     class IMT < OmniAuth::Strategies::SAML
       option :name, :imt
+      option :origin_param, "redirect_url"
+      option :idp_sso_service_url_runtime_params, {
+        "redirect_url" => "redirect_url"
+      }
 
       option :sp_entity_id, "decidim-imt"
 
@@ -30,14 +34,6 @@ module OmniAuth
         # hash_attributes["name"] = uid.split("@").first if hash_attributes["name"].blank?
 
         hash_attributes
-      end
-
-      def new_state
-        session["omniauth.state"] = SecureRandom.hex(16)
-      end
-
-      def stored_state
-        session.delete("omniauth.state")
       end
     end
   end

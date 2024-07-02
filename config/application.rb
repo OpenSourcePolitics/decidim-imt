@@ -64,6 +64,16 @@ module DevelopmentApp
       end
     end
 
+    initializer "session cookie domain", after: "Expire sessions" do
+      Rails.application.config.action_dispatch.cookies_same_site_protection = lambda { |request|
+        if request.fullpath.include?("/auth/imt")
+          :none
+        else
+          :lax
+        end
+      }
+    end
+
     if ENV.fetch("RAILS_SESSION_STORE", "") == "active_record"
       initializer "session cookie domain", after: "Expire sessions" do
         Rails.application.config.session_store :active_record_store, key: "_decidim_session", expire_after: Decidim.config.expire_session_after
