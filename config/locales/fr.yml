@@ -124,6 +124,15 @@ fr:
       show:
         local_area: Espace d'organisation
     proposals:
+      admin:
+        participatory_texts:
+          article-preview:
+            are_you_sure: Êtes-vous sûr ?
+            delete: Supprimer
+          discard:
+            delete: supprimé
+            paragraph: paragraphe
+            success: Tous les brouillons de texte participatifs ont été rejetés.
       collaborative_drafts:
         new:
           add_file: Ajouter le fichier
@@ -132,6 +141,8 @@ fr:
         collaborative_drafts_list: Accéder aux brouillons collaboratifs
         new_proposal: Nouvelle proposition
         view_proposal: Voir la proposition
+      markdown_to_proposals:
+        paragraph: paragraphe
     scopes:
       global: Portée générale
       picker:
