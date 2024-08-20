@@ -33,8 +33,8 @@ module DiscardParticipatoryTextExtends
 
   def update_later_proposals_title(component, value, is_article, locale)
     proposals = Decidim::Proposals::Proposal.drafts.where(decidim_component_id: component.id)
-                                                   .where(participatory_text_level: "article")
-                                                   .select { |proposal| proposal.title[locale].split.last.to_i > value }
+                                            .where(participatory_text_level: "article")
+                                            .select { |proposal| proposal.title[locale].split.last.to_i > value }
     if proposals.any? && is_article
       proposals.sort_by(&:id).each_with_index do |proposal, index|
         proposal.update(title: { "#{locale}": "#{I18n.t("decidim.proposals.admin.participatory_texts.discard.paragraph")} #{value + index}" })
