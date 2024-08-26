@@ -1,0 +1,14 @@
+<div class="grid-x">
+  <div class="cell">
+    <%= form.hidden_field :position, class: "position" %>
+    <%= form.text_field :title, required: true %>
+  </div>
+</div>
+<% if proposal.article? %>
+  <div class="grid-x">
+    <div class="cell">
+      <%= form.text_area :body, required: true, rows: 5 %>
+    </div>
+  </div>
+<% end %>
+<%= link_to t(".delete"), discard_participatory_texts_path(proposal_id: proposal.id, level: proposal.participatory_text_level), method: "POST", data: { confirm: t(".are_you_sure") } %>

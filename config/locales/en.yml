@@ -122,6 +122,15 @@ en:
       show:
         local_area: Organization area
     proposals:
+      admin:
+        participatory_texts:
+          article-preview:
+            are_you_sure: Are you sure ?
+            delete: Delete
+          discard:
+            delete: deleted
+            paragraph: paragraph
+            success: All participatory text drafts have been discarded.
       collaborative_drafts:
         new:
           add_file: Add file
@@ -130,6 +139,8 @@ en:
         collaborative_drafts_list: Collaborative drafts list
         new_proposal: New proposal
         view_proposal: View proposal
+      markdown_to_proposals:
+        paragraph: paragraph
     scopes:
       global: Global
       picker:
